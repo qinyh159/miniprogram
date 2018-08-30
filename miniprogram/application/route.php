@@ -14,3 +14,4 @@ use think\Route;
 Route::rule('test','mini/test/index');
 Route::rule('getLogisticsInfo','mini/test/getLogisticsInfo');
 Route::rule('downLoadExcel','mini/test/downLoadExcel');
+Route::rule('saveDataToWocf','mini/test/saveDataToWocf');

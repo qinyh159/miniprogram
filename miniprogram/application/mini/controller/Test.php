@@ -267,4 +267,13 @@ class Test extends Controller
 		return $typeCom;
 	}
 
+
+	/**
+	 * 将集团穿过来的数据转发给wocf
+	 */
+	public function saveDataToWocf(){
+		$request = Request::instance();
+		dump($request->param());
+	}
+
 }
