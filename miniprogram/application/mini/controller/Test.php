@@ -273,7 +273,88 @@ class Test extends Controller
 	 */
 	public function saveDataToWocf(){
 		$request = Request::instance();
-		dump($request->param());
+		$data = $request->param();
+
+		$userNumber = (string)(empty($data["userNumber"]) ? "" : $data["userNumber"]);
+
+		$rechargeTime = (string)(empty($data["rechargeTime"]) ? "" : $data["rechargeTime"]);
+
+		$rechargeChannel = (string)(empty($data["rechargeChannel"]) ? "" : $data["rechargeChannel"]);
+
+		$rechargeAmount = (string)(empty($data["rechargeAmount"]) ? "" : $data["rechargeAmount"]);
+
+		$rechargeID = (string)(empty($data["rechargeID"]) ? "" : $data["rechargeID"]);
+
+		$rechargeAreaCode = (string)(empty($data["rechargeAreaCode"]) ? "" : $data["rechargeAreaCode"]);
+
+		$serviceType = (string)(empty($data["serviceType"]) ? "" : $data["serviceType"]);
+
+		$loginNumber = (string)(empty($data["loginNumber"]) ? "" : $data["loginNumber"]);
+
+		$numType = (string)(empty($data["numType"]) ? "" : $data["numType"]);
+
+		$netType = (string)(empty($data["netType"]) ? "" : $data["netType"]);
+
+		$state = (string)(empty($data["state"]) ? "" : $data["state"]);
+
+		//将数据发送到wocf
+		$url = "http://oto.gx10010.com/app/index.php?i=47&c=entry&do=game_jinan&m=cm_bigwheel&op=savechargelog";
+		$log = array(
+				'userNumber' => $userNumber,
+				'rechargeTime' => $rechargeTime,
+				'rechargeChannel' => $rechargeChannel,
+				'rechargeAmount' => $rechargeAmount,
+				'rechargeID' => $rechargeID,
+				'rechargeAreaCode' => $rechargeAreaCode,
+				'serviceType' => $serviceType,
+				'loginNumber' => $loginNumber,
+				'numType' => $numType,
+				'netType' => $netType,
+				'state' => $state
+		);
+		$result = $this->post($url,$log);
+		return $result;
+	}
+
+
+	/**
+	 * post请求
+	 * @param $url
+	 * @param $data
+	 * @param string $cookie
+	 * @param null $proxy
+	 * @return bool|string
+	 */
+	 public function post($url, $data, $cookie = '', $proxy = null)
+	{
+
+		if (!$url) return false;
+		$ssl = substr($url, 0, 8) == 'https://' ? true : false;
+		$curl = curl_init();
+		if (!is_null($proxy)) curl_setopt($curl, CURLOPT_PROXY, $proxy);
+		if (substr($url, 0, 8) == "https://") {
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); // 从证书中检查SSL加密算法是否存在
+		}
+
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);//Post提交的数据包
+
+		// 返回 response_header, 该选项非常重要,如果不为 true, 只会获得响应的正文
+		curl_setopt($curl, CURLOPT_HEADER, true);
+
+
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$content = curl_exec($curl);
+		// 获得响应结果里的：头大小
+		$headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		// 根据头大小去获取头信息内容
+		$header = substr($content, 0, $headerSize);
+		curl_close($curl);
+		return substr($content,$headerSize);
 	}
 
 }
