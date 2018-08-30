@@ -274,28 +274,31 @@ class Test extends Controller
 	public function saveDataToWocf(){
 		$request = Request::instance();
 		$data = $request->param();
+		$json = isset($_POST["HTTP_RAW_POST_DATA"]) ? $_POST["HTTP_RAW_POST_DATA"] : file_get_contents("php://input");
+		$json = trim((String)$json);
+		$object = json_decode($json, true);
+		
+		$userNumber = (string)(empty($data["userNumber"]) ? $object["userNumber"] : $data["userNumber"]);
 
-		$userNumber = (string)(empty($data["userNumber"]) ? "" : $data["userNumber"]);
+		$rechargeTime = (string)(empty($data["rechargeTime"]) ? $object["rechargeTime"] : $data["rechargeTime"]);
 
-		$rechargeTime = (string)(empty($data["rechargeTime"]) ? "" : $data["rechargeTime"]);
+		$rechargeChannel = (string)(empty($data["rechargeChannel"]) ? $object["rechargeChannel"] : $data["rechargeChannel"]);
 
-		$rechargeChannel = (string)(empty($data["rechargeChannel"]) ? "" : $data["rechargeChannel"]);
+		$rechargeAmount = (string)(empty($data["rechargeAmount"]) ? $object["rechargeAmount"] : $data["rechargeAmount"]);
 
-		$rechargeAmount = (string)(empty($data["rechargeAmount"]) ? "" : $data["rechargeAmount"]);
+		$rechargeID = (string)(empty($data["rechargeID"]) ? $object["rechargeID"] : $data["rechargeID"]);
 
-		$rechargeID = (string)(empty($data["rechargeID"]) ? "" : $data["rechargeID"]);
+		$rechargeAreaCode = (string)(empty($data["rechargeAreaCode"]) ? $object["rechargeAreaCode"] : $data["rechargeAreaCode"]);
 
-		$rechargeAreaCode = (string)(empty($data["rechargeAreaCode"]) ? "" : $data["rechargeAreaCode"]);
+		$serviceType = (string)(empty($data["serviceType"]) ? $object["serviceType"] : $data["serviceType"]);
 
-		$serviceType = (string)(empty($data["serviceType"]) ? "" : $data["serviceType"]);
+		$loginNumber = (string)(empty($data["loginNumber"]) ? $object["loginNumber"] : $data["loginNumber"]);
 
-		$loginNumber = (string)(empty($data["loginNumber"]) ? "" : $data["loginNumber"]);
+		$numType = (string)(empty($data["numType"]) ? $object["numType"] : $data["numType"]);
 
-		$numType = (string)(empty($data["numType"]) ? "" : $data["numType"]);
+		$netType = (string)(empty($data["netType"]) ? $object["netType"] : $data["netType"]);
 
-		$netType = (string)(empty($data["netType"]) ? "" : $data["netType"]);
-
-		$state = (string)(empty($data["state"]) ? "" : $data["state"]);
+		$state = (string)(empty($data["state"]) ? $object["state"] : $data["state"]);
 
 		//将数据发送到wocf
 		$url = "http://oto.gx10010.com/app/index.php?i=47&c=entry&do=game_jinan&m=cm_bigwheel&op=savechargelog";
