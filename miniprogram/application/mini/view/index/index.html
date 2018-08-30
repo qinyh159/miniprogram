@@ -1,0 +1,250 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.10.1.min.js"></script>
+    <style>
+
+        .video_placeholder .poster_img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mod_player{
+            position: relative;
+        }
+
+        .video_placeholder{
+            height: 360px
+        }
+
+        .mod_video_unit {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #video {
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        .mod_video_info {
+            position: relative;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .video_meta {
+            position: relative;
+            margin: 0 22px 0 0;
+        }
+
+        .video_title {
+            display: block;
+            width: 100%;
+            font-size: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .video_desc {
+            font-size: 13px;
+            color: #979797;
+        }
+        .video_placeholder_play {
+            content: '';
+            position: absolute;
+            z-index: 5;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            background: url(//i.gtimg.cn/qqlive/images/20150911/i1441959133_1.jpg) 0 0 no-repeat;
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+
+        .video_placeholder .tvp_play_sum {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            padding: 0 4px;
+            height: 22px;
+            line-height: 22px;
+            background: rgba(0,0,0,.6);
+            font-size: 12px;
+            color: #fff;
+        }
+
+
+
+    </style></head>
+
+<body style="">
+
+<div>
+
+    <div class="mod_bd" id="videolist">
+        <div class="mod_video_unit">
+            {volist name="dataList" id="vo"}
+            <div class="mod_player">
+                <div class=" video_placeholder _play">
+
+                    <a class="video_placeholder_play"></a>
+                    <img class="poster_img _img" src="{$vo.img}" alt="{$vo.text}">
+                    <div class="tvp_play_sum">
+                        <div class="tvp_text _title">{$vo.duration}</div>
+                    </div>
+                </div>
+                <div class="mod_video none"></div>
+            </div>
+            <div class="mod_video_info">
+                <div class="video_meta">
+                    <a class="video_title _title" href="javascript:;">{$vo.text}</a>
+                    <div class="video_desc">
+                        {$vo.date}  &nbsp;&nbsp;   {$vo.mark_num}   &nbsp;&nbsp;  {$vo.click_times}
+                    </div>
+                </div>
+                <div class="video_share _share none" _hot="vplus.arrowshow" data-vid="k0338vcpnrv"><i class="icon_share"></i></div>
+            </div>
+        </div>
+        {/volist}
+
+    </div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+$(function () {
+
+        //获取当前视频列表的长度
+        var lis = $(".video_placeholder_play");
+        var vLen = lis.length;
+        //var video = document.getElementById("video");
+
+        var curr = 0; // 当前播放的视频
+        var url = new Array(
+        {volist name="dataList" id="vo"}
+         '{$vo.video}',
+        {/volist}
+        );
+        console.log(vLen);
+        //video.addEventListener('ended', play);
+
+        $(".video_placeholder_play").each(function(index,element) {
+            $(this).touch(function() {
+                playVideo(this,index);
+                console.log(index);
+            })
+        })
+
+
+
+        //play();
+        function play() {
+            curr++;
+            if(curr<0||curr >vLen)curr=0;
+            console.log("auto play:"+curr);
+            $(".video_placeholder_play").each(function (index,element) {
+                if(index == curr){
+                    playVideo(this,"no index");
+                }
+            });
+        }
+
+        function playVideo(objec,index){
+
+            if(index!="no index"){
+                curr = index;
+                console.log(index);
+            }
+
+
+            var videoCopy = ' <video id="video" width="100%" controls="controls" poster="//i.gtimg.cn/qqlive/images/20150608/black.png"   style="display: block; z-index: 100;"></video>';
+            var curVideo = $(objec).parents(".mod_video_unit").find('#video');
+            console.log($(objec).find('#video'));
+            if(index=="no index"){
+                $("#video").remove();
+            }
+            if(curVideo.length==0){
+                console.log("remove");
+                $("#video").remove();
+                $(objec).before(videoCopy);
+            }
+            console.log("cyrr:"+curr+",url[curr]:"+url[curr]);
+            if(typeof($("#video").attr("autoplay"))=="undefined"){
+                $("#video").attr("src",url[curr])
+                $("#video").attr("autoplay","autoplay");
+                $("#video").css("display","block");
+                $("#video").css("z-index","100");
+                var video = document.getElementById("video");
+                video.addEventListener('ended', play);
+            }
+
+            console.log(index);
+            console.log(curr);
+            if (curr >= vLen-1) {
+                index = curr = -1;
+            }
+
+        }
+
+
+
+
+      /*  var startX = 0;
+        var startY = 0;
+        $("body").on("touchstart", function(e) {
+            e.preventDefault();
+            startX = e.originalEvent.changedTouches[0].pageX;
+            startY = e.originalEvent.changedTouches[0].pageY;
+        });
+        $("body").on("touchmove", function(e) {
+            e.preventDefault();
+            var moveEndX = e.originalEvent.changedTouches[0].pageX;
+            var moveEndY = e.originalEvent.changedTouches[0].pageY;
+            var X = moveEndX - startX;
+            var Y = moveEndY - startY;
+
+            if ( Math.abs(X) > Math.abs(Y) && X > 0 ) {
+                console.log("left 2 right");
+            }
+            else if ( Math.abs(X) > Math.abs(Y) && X < 0 ) {
+                console.log("right 2 left");
+            }
+            else if ( Math.abs(Y) > Math.abs(X) && Y > 0) {
+                console.log("top 2 bottom");
+            }
+            else if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
+                console.log("bottom 2 top");
+            }
+            else{
+                console.log("just touch");
+            }
+        });*/
+
+    });
+
+</script>
+
+
+</body></html>

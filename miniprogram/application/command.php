@@ -9,4 +9,7 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-return [];
+return [
+	'app\index\command\SpiderTool',
+	'app\index\command\GetPhoneNumberLocation'
+];

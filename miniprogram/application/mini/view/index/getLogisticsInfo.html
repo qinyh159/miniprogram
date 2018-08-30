@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.10.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.kuaidi100.com/css/smart/mbase_v6.css?version=201808061429">
+    <link rel="stylesheet" href="https://cdn.kuaidi100.com/css/smart/query_v6.css?version=201801081620">
+</head>
+<body>
+    <h5>物流公司：{$curCommpany}</h5>
+<section class="result-box hidden" id="resultBox" style="display: block;">
+    <div class="result-success" id="success" style="display: block;">
+        <div class="result-top" id="resultTop">
+            <span id="sortSpan" class="col1-up" title="切换排序" style="background: url("")">时间</span>
+            <span class="col2">地点和跟踪进度</span>
+        </div>
+        <ul id="result" class="result-list sortup">
+            {volist name="curLogisticsInfoList" id="vo" key="index"}
+            <li class="{php}if($index==1){echo 'last finish';}{/php}">
+                <div class="col1"><dl><dt>{$vo.time}</dt></dl></div>
+                <div class="col2"><span></span></div>
+                <div class="col3">{$vo.context}</div>
+            </li>
+            {/volist}
+        </ul>
+
+
+    </div>
+    <div class="result-fail hidden" id="fail" style="display: none;">
+        <p>请核对你的公司和单号是否正确</p>
+        <p><a class="result-btn a-changecom">更改公司</a></p>
+    </div>
+    <div class="result-fail hidden" id="network" style="display: none;">
+        <p>请检查您的网络，稍后刷新页面重试</p>
+    </div>
+    <div class="result-fail hidden" id="nocom" style="display: none;">
+        <p>请核对单号是否正确，或手动选择快递公司</p>
+        <p><a class="result-btn a-choosecom">选择公司</a></p>
+    </div>
+</section>
+</body>
+
+
+</html>
