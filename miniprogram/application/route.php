@@ -9,13 +9,8 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
+use think\Route;
 
-];
+Route::rule('test','mini/test/index');
+Route::rule('getLogisticsInfo','mini/test/getLogisticsInfo');
+Route::rule('downLoadExcel','mini/test/downLoadExcel');

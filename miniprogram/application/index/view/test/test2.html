@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东开普勒订单查询</title>
+    <script type="text/javascript" src="/static/js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/datetime_js_css_include.js"></script>
+
+</head>
+<body>
+<div style="margin-top: 30px;">
+    appkey<input id="appkey" placeholder="请输入appkey"/>
+
+    <p><span class="fieldLabel"> 自定义时间范围: </span>
+        <input type="text" id="beginDateTimepicker" name="beginDateTimepicker" value="" readonly="readonly"/>
+        - <input type="text" id="endDateTimepicker" name="endDateTimepicker" value="" readonly="readonly"/>
+        <button id="get_data" type="button" onclick="getData()">获取数据</button>
+    </p>
+
+</div>
+
+</body>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+
+        /*
+         * 设置 jquery ui datepicker 外观
+         */
+        timeFormatObj = {
+
+            showSecond: true,
+            changeMonth: true,
+            timeFormat: 'HHmmss',
+            dateFormat: 'yymmdd',
+
+            stepHour: 1,
+            stepMinute: 5,
+            stepSecond: 5
+        };
+
+
+        $('#beginDateTimepicker').datetimepicker(timeFormatObj);
+        $('#endDateTimepicker').datetimepicker(timeFormatObj);
+    });
+
+    function getData() {
+        var beginTime = $('#beginDateTimepicker').val().trim();
+        var endTime = $('#endDateTimepicker').val().trim();
+        var appkey = $('#appkey').val().trim();
+        beginTime = beginTime.replace(/\s+/g, '');
+        endTime = endTime.replace(/\s+/g, '');
+        if (beginTime == "" || endTime == "" || appkey == "") {
+            alert("必填项不能为空字符串");
+            return;
+        }
+        var originUrl = "https://router.jd.com/api?v=2.0&method=jd.kepler.order.getlist&access_token=123&app_key={appkey}&sign_method=md5&format=json&timestamp={timestamp}&sign=462B4A880D87061FBA63AB8C93B37258&param_json={json}";
+        var timestamp = date2str(new Date(),"yyyy-MM-dd hh:mm:ss");
+        var url = originUrl;
+        url = url.replace("{appkey}", appkey);
+        url = url.replace("{timestamp}", timestamp);
+        var json = {"pageSize":20,"beginTime":beginTime,"endTime":endTime,"orderId":123123,"pageIndex":1}
+        var jsonStr = JSON.stringify(json);
+        url = url.replace("{json}", jsonStr);
+        console.log(url);
+        $.ajax({
+            type: "GET",
+            url: url,
+            datatype: "json",
+            success: function (data) {
+            console.log(data);
+            },
+            error: function () {
+
+            }
+        });
+
+
+    }
+
+    function date2str(x, y) {
+        var z = {
+            y: x.getFullYear(),
+            M: x.getMonth() + 1,
+            d: x.getDate(),
+            h: x.getHours(),
+            m: x.getMinutes(),
+            s: x.getSeconds()
+        };
+        return y.replace(/(y+|M+|d+|h+|m+|s+)/g, function (v) {
+            return ((v.length > 1 ? "0" : "") + eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
+        });
+    }
+
+
+</script>
+</html>

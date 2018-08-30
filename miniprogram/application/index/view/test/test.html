@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东开普勒地址生成</title>
+    <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
+    <style>
+        input {
+            width:100%
+        }
+
+        textarea {
+            width: 100%
+        }
+        p{
+            font-size: 15px;
+            line-height:0px;
+            font-family:"SimHei";
+        }
+    </style>
+    <script>
+        var baseUrlOrigin = "https://coupon.m.jd.com/union?mtm_source=kepler-m&mtm_subsource={appkey}&mopenbp5={param}&returl={url} "
+        function createUrl() {
+            var appkey = $("#appkey").val().trim();
+            var param = $("#mopenbp5").val().trim();
+
+            var url = $("#url").val().trim();
+
+            if ("" == appkey) {
+                alert("appkey不能为空");
+                return;
+            }
+
+            if ("" == url) {
+                alert("url不能为空");
+                return;
+            }
+
+
+
+            var paramEncode = param;
+            var urlEncode = encodeURIComponent (url);
+
+            baseUrl = baseUrlOrigin.replace("{appkey}", appkey);
+            baseUrl = baseUrl.replace("{param}", paramEncode);
+            baseUrl = baseUrl.replace("{url}", urlEncode);
+
+            $("#encode_url").html(baseUrl);
+            $("#copy_click").html("点我复制");
+        }
+        $(document).ready(function(){
+
+            $("#copy_click").click(function(){
+                var text = $("#encode_url").text();
+                if(text==""){
+                    alert("未生成地址");
+                    return;
+                }
+                var input = document.getElementById("copy_textarea");
+                input.value = text; // 修改文本框的内容
+                input.select(); // 选中文本
+                document.execCommand("Copy");
+                $("#copy_click").html("复制成功");
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+<h1>
+    <center>京东开普勒地址生成</center>
+</h1>
+<table align="center">
+    <tr>
+        <th>appkey</th>
+        <th><input id="appkey" value="d963beadf1354b05ae77bead49a04a3b" placeholder="请输入appkey"/>
+        </th>
+    </tr>
+    <tr>
+        <th>参数</th>
+        <th>
+            <label>
+                <div>
+                    <input id="mopenbp5" placeholder="请输入传值参数"/>
+                </div>
+
+            </label>
+        </th>
+
+    </tr>
+    <tr>
+        <th></th>
+        <th><p>参数标签请按{nickname}_{mobile}_{openid}填写</p></th></tr>
+    <tr>
+        <th>url</th>
+        <th>
+            <textarea id="url" rows="5" cols="20" placeholder="请输入推广链接地址" ></textarea>
+        </th>
+    </tr>
+    <tr>
+        <th></th>
+        <th>
+            <input type="button" value="生成链接" onclick="createUrl()"/>
+        </th>
+    </tr>
+</table>
+<div>
+    <p>地址：</p>
+    <span id="encode_url" style="width:auto;overflow: auto" ></span>
+</div>
+<input id="copy_textarea" type="text"   display="none" style="width: 1px;z-index: -1000;border: 0px;">
+<button id="copy_click" >点我复制</button>
+</body>
+</html>
