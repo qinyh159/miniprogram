@@ -10,7 +10,7 @@ namespace app\miniprogram\command;
 
 use app\miniapp\common\WXBizDataCrypt;
 use app\miniprogram\model\MiniProgramsApplist;
-use app\miniprogram\Model\MiniProgramsFollower;
+use app\miniprogram\model\MiniProgramsFollower;
 use think\Config;
 use think\console\Command;
 use think\console\Input;
@@ -327,7 +327,7 @@ class Insertmessage extends Command
 					}
 
 					//将消息插入message表中,chattype为3(小程序event事件)
-					$messageMode = new \app\miniapp\model\MiniProgramsMessage();
+					$messageMode = new \app\miniprogram\model\MiniProgramsMessage();
 
 					if (empty($data["userData"]["avatarUrl"])) {
 						$data["userData"]["avatarUrl"] = $defaultAvatarUrl;
@@ -347,7 +347,7 @@ class Insertmessage extends Command
 
 					$messageId = $messageMode->name("mini_programs_message")->insertGetId($message);
 					//将消息插入messagenewrecord表中(查找某个app下的某个用户信息，若存在则更新，否则插入)
-					$messageNewRecordMode = new \app\miniapp\model\MiniProgramsNewMessageRecord();
+					$messageNewRecordMode = new \app\miniprogram\model\MiniProgramsNewMessageRecord();
 					$sql = "select * from mini_programs_newmessage_record where followerid = :followerid and appid = :appid ";
 
 					$newMessageInfo = $messageNewRecordMode->query($sql, ['followerid' => $followerid, "appid" => $appId]);
@@ -389,7 +389,7 @@ class Insertmessage extends Command
 					$eventInfo = $this->getEventInfoArr($data, $event_desc, $event_type, $component, $touches, $area, $duration, $phoneData, $userData, $defaultAvatarUrl, $openId, $uniqueId,
 						$appId, $followerid, $messageId, $object, $event_detail);
 
-					$eventModeEvent = new \app\miniapp\model\MiniProgramsEvent();
+					$eventModeEvent = new \app\miniprogram\model\MiniProgramsEvent();
 					$eventModeEvent->name("mini_programs_event")->insert($eventInfo);
 
 					$data['app_id'] = $appId;
@@ -557,7 +557,7 @@ class Insertmessage extends Command
 							}
 
 							//将消息插入message表中,chattype为3(小程序event事件)
-							$messageMode = new \app\miniapp\model\MiniProgramsMessage();
+							$messageMode = new \app\miniprogram\model\MiniProgramsMessage();
 							$paramJson = json_encode(empty($param) ? "" : $param, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 							$message = [
 								"openid" => empty($followerInfo[0]["openid"]) ? "" : $followerInfo[0]["openid"],
@@ -579,7 +579,7 @@ class Insertmessage extends Command
 
 
 							//将消息插入messagenewrecord表中(查找某个app下的某个用户信息，若存在则更新，否则插入)
-							$messageNewRecordMode = new \app\miniapp\model\MiniProgramsNewMessageRecord();
+							$messageNewRecordMode = new \app\miniprogram\model\MiniProgramsNewMessageRecord();
 							$sql = "select * from mini_programs_newmessage_record where followerid = :followerid and appid = :appid ";
 
 							$newMessageInfo = $messageNewRecordMode->query($sql, ['followerid' => $followerInfo[0]["id"], "appid" => $appid]);
@@ -621,8 +621,8 @@ class Insertmessage extends Command
 
 							//0为收消息
 							$localMsgType = 0;
-							$messageModel = new \app\miniapp\model\MiniProgramsMessage();
-							$chatModel = new \app\miniapp\model\MiniProgramsChatMessage();
+							$messageModel = new \app\miniprogram\model\MiniProgramsMessage();
+							$chatModel = new \app\miniprogram\model\MiniProgramsChatMessage();
 							//将信息插入，mini_programs_chat_message表
 							switch ($type) {
 								//文本
