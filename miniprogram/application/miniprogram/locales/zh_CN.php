@@ -1,0 +1,34 @@
+<?php
+$L['app_list'] = '小程序应用列表';
+$L['search_appid_title'] = '搜索appid/标题';
+$L['search'] = '搜索';
+$L['add_app'] = '添加小程序应用';
+$L['refresh'] = '刷新';
+$L['tooltip'] = '提示语';
+$L['name'] = '名称';
+$L['last_update'] = '最后更新';
+$L['total_pages'] = '页面数量';
+$L['events_within_last_7_days'] = '近7天事件总数';
+$L['actions'] = '操作';
+$L['details'] = '详情';
+$L['app_profile'] = '小程序详细信息';
+$L['pages'] = '页面列表';
+$L['configuration'] = '配置信息';
+$L['logout'] = '退出';
+$L['functions'] = '功能列表';
+$L['mini_program'] = '小程序';
+$L['app_management'] = 'App管理';
+$L['activity_stream'] = '消息流';
+$L['user'] = '用户';
+$L['user_management'] = '用户管理';
+$L['qrcode_management'] = '二维码管理';
+$L['qrcode_list'] = '二维码列表';
+$L['qrcode_group'] = '二维码组';
+$L['qrcode_analytics'] = '二维码分析';
+$L['scene_analytics'] = '场景值分析';
+$L['distribution_analytics'] = '数据分析';
+$L['app_analysis'] = '小程序分析';
+$L['app_page_analysis'] = '小程序页面分析';
+$L['hello'] = '你好';
+
+return $L;
