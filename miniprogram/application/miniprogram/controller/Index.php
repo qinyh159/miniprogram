@@ -81,7 +81,7 @@ class Index extends Controller
 
 
 		//debug表中保存后端得到的IP地址
-		/*if (!empty($json)) {
+		if (!empty($json)) {
 			$debugModel = new \app\miniprogram\model\MiniProgramsDebug();
 			$data = [
 				"time" => time(),
@@ -91,7 +91,7 @@ class Index extends Controller
 			];
 
 			$debugModel->name("mini_programs_debug")->insert($data);
-		}*/
+		}
 
 
 		//将原始数据放入debug队列中
