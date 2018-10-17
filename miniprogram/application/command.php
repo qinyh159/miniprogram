@@ -11,5 +11,6 @@
 
 return [
 	'app\index\command\SpiderTool',
-	'app\index\command\GetPhoneNumberLocation'
+	'app\index\command\GetPhoneNumberLocation',
+	'app\miniprogram\command\Insertmessage'
 ];

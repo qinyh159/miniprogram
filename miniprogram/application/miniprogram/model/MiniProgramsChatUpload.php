@@ -5,10 +5,10 @@
  * Date: 2018/2/27
  * Time: 9:56
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsChatUpload extends Model
 {
@@ -31,7 +31,7 @@ class MiniProgramsChatUpload extends Model
 
 	static public function insertChatUpload($type,$filename,$filepath,$originalfilename,$mimetype,$filesize)
 	{
-		$chatUploadMode = new \app\miniapp\model\MiniProgramsChatUpload();
+		$chatUploadMode = new \app\miniprogram\common\Model\MiniProgramsChatUpload();
 		$data = [
 			"time" => time(),
 			"type" => $type,
@@ -47,7 +47,7 @@ class MiniProgramsChatUpload extends Model
 
 	static public function findIdOfChatUpload($id)
 	{
-		$chatUploadMode = new \app\miniapp\model\MiniProgramsChatUpload();
+		$chatUploadMode = new \app\miniprogram\common\Model\MiniProgramsChatUpload();
 		$sql = "SELECT * FROM `mini_programs_chat_upload`  WHERE  id=:id";
 		$chatUploadInfo = $chatUploadMode->db()->query($sql, ['id' => $id]);
 		return $chatUploadInfo;

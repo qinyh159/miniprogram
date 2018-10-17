@@ -5,10 +5,10 @@
  * Date: 2018/3/14
  * Time: 9:47
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsSceneLog extends Model
 {
@@ -16,7 +16,7 @@ class MiniProgramsSceneLog extends Model
 
 	public function findByFollowerIdAndCreateTime($followerId,$createTime,$scene) {
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneLog();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneLog();
 		$sql = "SELECT * FROM `mini_programs_scene_log`  WHERE followerId=:followerId and createTime>=:createTime and scene=:scene ";
 		$Info = $mode->db()->query($sql,["followerId"=>$followerId,"scene"=>$scene,"createTime"=>$createTime]);
 		if( empty($Info) ) {
@@ -28,7 +28,7 @@ class MiniProgramsSceneLog extends Model
 
 	public function findTodayAllVisitors($appid,$createTime) {
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneLog();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneLog();
 		$sql = "SELECT * FROM `mini_programs_scene_log`  WHERE  createTime>=:createTime and appid=:appid GROUP by followerId";
 		$Info = $mode->db()->query($sql,["appid"=>$appid,"createTime"=>$createTime]);
 		if( empty($Info) ) {
@@ -39,7 +39,7 @@ class MiniProgramsSceneLog extends Model
 	}
 
 	public function findDurationAllVisitors($appid, $searchFrom, $searchTo) {
-		$mode = new \app\miniapp\model\MiniProgramsSceneLog();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneLog();
 		$sql = "SELECT * FROM `mini_programs_scene_log`  WHERE  createTime>=:searchFrom and createTime<:searchTo and appid=:appid GROUP by followerId";
 		$Info = $mode->db()->query($sql,["appid"=>$appid,"searchFrom"=>$searchFrom,"searchTo"=>$searchTo]);
 		if( empty($Info) ) {

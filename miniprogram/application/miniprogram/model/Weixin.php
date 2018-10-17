@@ -1,22 +1,22 @@
 <?php
 
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class Weixin extends Model {
 
 	public function getAccessToken($app_id) {
 		//查找当前accesstoken表中，是否存在该app的数据
-		$acessToken = \app\miniapp\model\MiniProgramsAccessToken::getToken($app_id);
+		$acessToken = \app\miniprogram\common\Model\MiniProgramsAccessToken::getToken($app_id);
 		//为空则请求微信服务器并保存返回的信息
 
 		if( isset( $acessToken[0]["time"] ) && (time() - $acessToken[0]["time"]) <=7000 ) {
 			return $acessToken[0]['accesstoken'];
 		}
 
-		$applistModel = new \app\miniapp\model\MiniProgramsApplist();
+		$applistModel = new \app\miniprogram\common\Model\MiniProgramsApplist();
 		$applist = $applistModel->getAppById($app_id);
 
 		if (empty($applist) || count($applist) <= 0) {
@@ -28,12 +28,12 @@ class Weixin extends Model {
 		//access_token的有效期目前为2个小时，需定时刷新获取access_token
 		$getAccessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential" . "&appid=" . $appId . "&secret=" . $appSecret;
 
-		$result = \app\miniapp\util\NetworkUtil::getCurl($getAccessTokenUrl);
+		$result = \app\miniprogram\util\NetworkUtil::getCurl($getAccessTokenUrl);
 		$tokenObject = json_decode($result, true);
 		if( !isset( $tokenObject['access_token'] ) ) {
 			return;
 		}
-		\app\miniapp\model\MiniProgramsAccessToken::insertToken($app_id, $tokenObject["access_token"]);
+		\app\miniprogram\common\Model\MiniProgramsAccessToken::insertToken($app_id, $tokenObject["access_token"]);
 		return $tokenObject["access_token"];
 	}
 
@@ -55,13 +55,13 @@ class Weixin extends Model {
 			'errmsg' => '',
 			'img' => '',
 		];
-		$result = \app\miniapp\util\NetworkUtil::post($api, $json);
+		$result = \app\miniprogram\util\NetworkUtil::post($api, $json);
 		if( $result[0] == '{') {
 			$arrResult['errmsg'] = $result;
 			return $arrResult;
 		}
 
-		$dir =  'resource/miniapp_qrcode/'. date('Y') . '/' . date('m') . '/';
+		$dir =  'resource/miniprogram_qrcode/'. date('Y') . '/' . date('m') . '/';
 		if( !is_dir($dir) ) {
 			mkdir($dir,0775,true);
 		}
@@ -87,7 +87,7 @@ class Weixin extends Model {
 			'errmsg' => '',
 			'img' => '',
 		];
-		$result = \app\miniapp\util\NetworkUtil::post($api, $json);
+		$result = \app\miniprogram\util\NetworkUtil::post($api, $json);
 		if( $result[0] == '{') {
 			$arrResult['errmsg'] = $result;
 			return $arrResult;

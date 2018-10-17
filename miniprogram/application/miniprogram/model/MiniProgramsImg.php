@@ -5,10 +5,10 @@
  * Date: 2017/11/22
  * Time: 17:42
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsImg extends Model
 {

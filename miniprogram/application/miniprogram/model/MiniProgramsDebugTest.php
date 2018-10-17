@@ -6,10 +6,10 @@
  * Time: 18:23
  */
 
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsDebugTest extends Model
 {

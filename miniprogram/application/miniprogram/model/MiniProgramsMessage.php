@@ -5,10 +5,10 @@
  * Date: 2018/2/6
  * Time: 17:49
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsMessage extends Model
 {
@@ -30,7 +30,7 @@ class MiniProgramsMessage extends Model
 
     public function insert($message)
     {
-        $Mode = new \app\miniapp\model\MiniProgramsMessage();
+        $Mode = new \app\miniprogram\common\Model\MiniProgramsMessage();
         return $Mode->name("mini_programs_message")->insertGetId($message);
     }
 

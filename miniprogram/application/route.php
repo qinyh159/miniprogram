@@ -15,3 +15,7 @@ Route::rule('test','mini/test/index');
 Route::rule('getLogisticsInfo','mini/test/getLogisticsInfo');
 Route::rule('downLoadExcel','mini/test/downLoadExcel');
 Route::rule('saveDataToWocf','mini/test/saveDataToWocf');
+Route::rule('verifyMobile','mini/test/verifyMobile');
+Route::rule('test1','mini/test/test1');
+Route::rule('test2','mini/test/test2');
+Route::rule('getMiniProgramsEvent','miniprogram/Index/getMiniProgramsEvent');

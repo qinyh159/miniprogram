@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{margin:0;padding:0;}
+        #wrap{
+            margin:30px auto;
+            width:500px;
+            height:200px;
+            border:1px solid #ccc;
+            text-align: center;
+            overflow: scroll;
+        }
+        #wrap p{
+            display: block;
+            height:400px;
+        }
+    </style>
+</head>
+<body style="height:2000px; width:20000px">
+<div id="wrap"  style="height:2000px; width:20000px">
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button><button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+    <button style="width: 100%;height: 120px;top: 30px;"  onclick="test()">点击</button>
+
+    <p></p>
+</div>
+<script>
+    window.onload=function(){
+        var oDiv = document.getElementById('wrap');//获取元素
+        oDiv.onmousemove = function(e){
+            e = e || window.event;
+            console.log('e.clientX:'+e.clientX);//输出x坐标
+            console.log('e.pageX:'+e.pageX);//输出x坐标
+            console.log('e.clientY:'+e.clientY);//输出y坐标
+            console.log('e.pageY:'+e.pageY);//输出y坐标
+        };
+
+    }
+    function test(){
+        console.log(1111);
+    }
+</script>
+</body>
+</html>

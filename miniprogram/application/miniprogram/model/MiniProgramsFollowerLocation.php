@@ -5,10 +5,10 @@
  * Date: 2018/1/17
  * Time: 16:04
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsFollowerLocation extends Model
 {

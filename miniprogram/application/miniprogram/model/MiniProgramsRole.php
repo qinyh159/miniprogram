@@ -6,9 +6,9 @@
  * Time: 11:45
  */
 
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
-use app\common\Model as BaseModel;
+use app\miniprogram\common\Model as BaseModel;
 use think\__require_file;
 
 class MiniProgramsRole extends BaseModel

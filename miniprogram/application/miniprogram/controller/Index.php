@@ -5,6 +5,18 @@
  * Date: 2018/10/13
  * Time: 11:41
  */
+namespace app\miniprogram\controller;
+use app\miniprogram\model\MiniProgramsApplist;
+
+use think\cache\driver\Redis;
+use think\Config;
+use app\miniprogram\common\Controller;
+use app\miniprogram\model\GetOpenId;
+use app\miniprogram\common\WXBizDataCrypt;
+use app\miniprogram\util\NetworkUtil;
+use app\miniprogram\modelMiniProgramsApplist;
+use app\miniprogram\model\MiniProgramsFollower;
+use app\miniprogram\model\MiniProgramsImg;
 class Index extends Controller
 {
 
@@ -20,9 +32,8 @@ class Index extends Controller
 	 */
 	function getMiniProgramsEvent()
 	{
-
 		$json = isset($_POST["HTTP_RAW_POST_DATA"]) ? $_POST["HTTP_RAW_POST_DATA"] : file_get_contents("php://input");
-		$ip = \app\miniapp\util\NetworkUtil::getIP();
+		$ip = NetworkUtil::getIP();
 		$json = trim((String)$json);
 
 		if( empty($json) ) {
@@ -44,7 +55,7 @@ class Index extends Controller
 		}
 
 		$applist = "SELECT * FROM `mini_programs_applist` WHERE uniqueid= :uniqueId";
-		$applistModel = new \app\miniapp\model\MiniProgramsApplist();
+		$applistModel = new MiniProgramsApplist();
 		$applistInfo = $applistModel->query($applist, ['uniqueId' => $uniqueId]);
 
 		if (empty($applistInfo) || count($applistInfo) < 0) {
@@ -52,7 +63,7 @@ class Index extends Controller
 			return;
 		}
 
-		$redis = new \Redis();
+		$redis =new \Redis();
 		Config::load('config.php');
 		$redisconfig = Config::get('REDIS');
 		$result = $redis->connect($redisconfig["REDIS_HOST"], $redisconfig["REDIS_PORT"]);
@@ -71,7 +82,7 @@ class Index extends Controller
 
 		//debug表中保存后端得到的IP地址
 		/*if (!empty($json)) {
-			$debugModel = new \app\miniapp\model\MiniProgramsDebug();
+			$debugModel = new \app\miniprogram\model\MiniProgramsDebug();
 			$data = [
 				"time" => time(),
 				"ip_address" => isset($ip) ? $ip : "",
@@ -148,7 +159,7 @@ class Index extends Controller
 		}
 
 		$applist = "SELECT * FROM `mini_programs_applist` WHERE uniqueid= :uniqueId";
-		$applistModel = new \app\miniapp\model\MiniProgramsApplist();
+		$applistModel = new MiniProgramsApplist();
 		$applistInfo = $applistModel->query($applist, ['uniqueId' => $uniqueId]);
 
 		if ( empty($applistInfo) ) {
@@ -160,7 +171,7 @@ class Index extends Controller
 
 		$appid = $applistInfo[0]['id'];
 
-		$followerModel = new \app\miniapp\model\MiniProgramsFollower();
+		$followerModel = new \app\miniprogram\model\MiniProgramsFollower();
 
 		$sql = "select id,curUserKey from mini_programs_follower where openid = :openid and appid = :appid order by id asc limit 1";
 		$follower = $followerModel->query($sql, ['openid' => $openid, 'appid' => $appid]);
@@ -399,7 +410,7 @@ class Index extends Controller
 		$imgpath = $this->getImageContentBy($object);
 
 		//查看当前是否已经存在数据，有则更新图片路径
-		$miniImgModel = new \app\miniapp\model\MiniProgramsImg();
+		$miniImgModel = new MiniProgramsImg();
 		$sql = "select * from mini_programs_img where pagepath = '" . $object["pagepath"] . "' and projectname = '" . $object["projectname"] . "'";
 
 		$imgInfo = $miniImgModel->db()->query($sql);
@@ -456,7 +467,7 @@ class Index extends Controller
 	public
 	function getFilePath($fileName)
 	{
-		return "/miniapp/resource/file/name/" . $fileName;
+		return "/miniprogram/resource/file/name/" . $fileName;
 	}
 
 

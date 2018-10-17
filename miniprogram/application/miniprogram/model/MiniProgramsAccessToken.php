@@ -5,11 +5,11 @@
  * Date: 2018/2/25
  * Time: 12:06
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
-use app\miniapp\util\NetworkUtil;
+use app\miniprogram\common\Model;
+use app\miniprogram\util\NetworkUtil;
 
 class MiniProgramsAccessToken extends Model
 {
@@ -19,7 +19,7 @@ class MiniProgramsAccessToken extends Model
 	static public function getToken($appid)
 	{
 
-		$model = new \app\miniapp\model\MiniProgramsAccessToken();
+		$model = new \app\miniprogram\common\Model\MiniProgramsAccessToken();
 
 		$sql = "select * from mini_programs_access_token where appid = :appid";
 
@@ -29,13 +29,13 @@ class MiniProgramsAccessToken extends Model
 	static public function insertToken($appid, $accesstoken)
 	{
 
-		$model = new \app\miniapp\model\MiniProgramsAccessToken();
+		$model = new \app\miniprogram\common\Model\MiniProgramsAccessToken();
 		$model->db()->insert(["appid" => $appid, "time" => time(), "accesstoken" => $accesstoken]);
 	}
 
 	static public function updateToken($id, $accesstoken)
 	{
-		$model = new \app\miniapp\model\MiniProgramsAccessToken();
+		$model = new \app\miniprogram\common\Model\MiniProgramsAccessToken();
 
 		$model->db()->where("id", $id)->update([
 			"time" => time(),
@@ -47,7 +47,7 @@ class MiniProgramsAccessToken extends Model
 	public function getTokenByAppId($appid)
 	{
 		$appid = (int)$appid;
-		$model = new \app\miniapp\model\MiniProgramsAccessToken();
+		$model = new \app\miniprogram\common\Model\MiniProgramsAccessToken();
 		$sql = "SELECT * from mini_programs_access_token where appid = :appid limit 1";
 		$tokenInfo = $model->db()->query($sql, ['appid' => $appid]);
 		return $tokenInfo;

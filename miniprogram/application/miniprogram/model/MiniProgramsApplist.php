@@ -5,10 +5,10 @@
  * Date: 2018/1/10
  * Time: 9:56
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsApplist extends Model {
 	var $table = "mini_programs_applist";
@@ -19,7 +19,7 @@ class MiniProgramsApplist extends Model {
 
 	public function getAppByUniqueId($uniqueid) {
 
-		$mode = new \app\miniapp\model\MiniProgramsApplist();
+		$mode = new MiniProgramsApplist();
 		$sql = "SELECT * FROM `mini_programs_applist`  WHERE  uniqueid=:uniqueid";
 		$Info = $mode->db()->query($sql, ['uniqueid' => $uniqueid]);
 		if( empty($Info) ) {
@@ -31,7 +31,7 @@ class MiniProgramsApplist extends Model {
 
 	public function getAllAppList() {
 
-		$mode = new \app\miniapp\model\MiniProgramsApplist();
+		$mode = new MiniProgramsApplist();
 		$sql = "SELECT * FROM `mini_programs_applist`  group by  uniqueid order by id ASC ";
 		$Info = $mode->db()->query($sql);
 		if( empty($Info) ) {
@@ -89,7 +89,7 @@ class MiniProgramsApplist extends Model {
 
 	public function getAppByOriginalid($originalid) {
 
-		$mode = new \app\miniapp\model\MiniProgramsApplist();
+		$mode = new MiniProgramsApplist();
 		$sql = "SELECT * FROM `mini_programs_applist`  WHERE  originalid=:originalid";
 		$Info = $mode->db()->query($sql, ['originalid' => $originalid]);
 		if( empty($Info) ) {

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+<div id="result_info2" style="display:block">
+    <div style="margin-top:10px;"><input class="btn-confirm" name="关闭" id="closebtn" type="button" value="关闭"> </div>
+</div>
+<button onclick="test()">click</button>
+</body>
+<script>
+
+
+
+
+  function go10010(){
+      $('#go_gx10010').remove();
+      window.location.href="http://cm.gx10010.com";
+  }
+
+
+
+    function test(){
+        $("#result_info2 div").prepend('<input class="btn-go-gx10010" name="流量充值" id="go_gx10010" onclick="go10010()" type="button" value="流量充值">');
+    }
+
+
+</script>
+</html>

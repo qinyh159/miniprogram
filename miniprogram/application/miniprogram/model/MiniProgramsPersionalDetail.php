@@ -5,10 +5,10 @@
  * Date: 2018/1/2
  * Time: 14:57
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsPersionalDetail extends Model
 {

@@ -5,10 +5,10 @@
  * Date: 2018/3/14
  * Time: 0:51
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsSceneDaySummary extends Model
 {
@@ -17,7 +17,7 @@ class MiniProgramsSceneDaySummary extends Model
 	public function findByDateAndScene($appid, $scene, $date)
 	{
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		$sql = "SELECT * FROM `mini_programs_scene_day_summary`  WHERE appid=:appid and createTime=:date and scene=:scene ";
 		$Info = $mode->db()->query($sql, ["appid" => $appid, "scene" => $scene, "date" => $date]);
 		if (empty($Info)) {
@@ -29,13 +29,13 @@ class MiniProgramsSceneDaySummary extends Model
 
 	public function insertSceneDaySummary($summary)
 	{
-		$Mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$Mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		return $Mode->name("mini_programs_scene_day_summary")->insertGetId($summary);
 	}
 
 	public function updateSceneDaySummary($summary, $newUser, $logFlag)
 	{
-		$Mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$Mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		//当前有新用户
 		if ($newUser) {
 			$Mode->db()->where("id", $summary[0]["id"])->update(
@@ -67,7 +67,7 @@ class MiniProgramsSceneDaySummary extends Model
 	}
 
 	public function findSceneByDuration($appid, $from,$to,$scene=0){
-		$mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		$startSql = "SELECT s.id,s.appid,s.scene,s.users,s.newUsers,s.times,s.createTime,a.appid,a.apptitle FROM `mini_programs_scene_day_summary`  s JOIN mini_programs_applist a on s.appid = a.id WHERE s.appid=:appid and s.createTime>=:from and s.createTime<=:to  ";
 		$param["appid"] = $appid;
 		$param["from"] = $from;
@@ -107,7 +107,7 @@ class MiniProgramsSceneDaySummary extends Model
 	public function findByDate($appid,$starDate, $endDate)
 	{
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		$sql = "SELECT s.id,s.appid,s.scene,s.users,s.newUsers,s.times,s.createTime,a.appid,a.apptitle FROM `mini_programs_scene_day_summary`  s JOIN mini_programs_applist a on s.appid = a.id WHERE s.appid=:appid and s.createTime BETWEEN :starDate AND :endDate ORDER BY  s.users desc";
 		$Info = $mode->db()->query($sql, ["appid" => $appid, "starDate" => $starDate,"endDate" => $endDate]);
 		if (empty($Info)) {
@@ -120,7 +120,7 @@ class MiniProgramsSceneDaySummary extends Model
 	public function findSummaryInDuration($appid, $searchFrom, $searchTo, $scene)
 	{
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		$startSql = "SELECT s.id,s.appid,s.scene,sum(s.users) users,sum(s.newUsers) newUsers,sum(s.times) times,s.createTime,a.appid,a.apptitle FROM `mini_programs_scene_day_summary`  s JOIN mini_programs_applist a on s.appid = a.id
 			WHERE s.appid=:appid and s.createTime>=:searchFrom  and s.createTime<:searchTo ";
 		$param = array();
@@ -148,7 +148,7 @@ class MiniProgramsSceneDaySummary extends Model
 	public function findNewVisitors($appid, $date)
 	{
 
-		$mode = new \app\miniapp\model\MiniProgramsSceneDaySummary();
+		$mode = new \app\miniprogram\common\Model\MiniProgramsSceneDaySummary();
 		$sql = "SELECT sum(newUsers) newUsers FROM `mini_programs_scene_day_summary`   WHERE appid=:appid and createTime=:date  ";
 		$Info = $mode->db()->query($sql, ["appid" => $appid, "date" => $date]);
 		if (empty($Info)) {

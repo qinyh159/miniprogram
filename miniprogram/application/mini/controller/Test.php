@@ -7,11 +7,17 @@
  */
 namespace app\mini\controller;
 
+use app\miniprogram\model\MiniProgramsApplist;
 use phpspider\core\requests;
 use think\Controller;
+use think\Db;
 use think\Request;
+
+
 class Test extends Controller
 {
+
+
 	public function Index(){
 		$request = Request::instance();
 		$sharId = $request->get('shar_id');
@@ -73,6 +79,116 @@ class Test extends Controller
 		$this->assign("dataList", $data);
 		return $this->fetch('index/index');
 	}
+
+
+	public function test1(){
+
+		$addNum = intval(2 / 3);
+		print_r($addNum);exit;
+
+		define("JAVA_DEBUG", true);
+		define("JAVA_HOSTS", "127.0.0.1:8081");
+		require_once("Java.inc");
+		java_set_file_encoding("UTF-8");
+
+		$props = java("java.lang.System")->getProperties();
+
+		//echo $props;
+		$endecrypt = new \Java("com.example.Endecrypt");
+		$result = $endecrypt->setEncode("utf-8");
+		$oldString = "110103308011809271104014860000|15615315619|0.01|20180927110402";
+		$SPKEY = "abcdefg1234567";
+		$data = $endecrypt->get3DESEncrypt($oldString, $SPKEY);
+		echo ( $data) ;
+		$data = $endecrypt->get3DESDecrypt($data, $SPKEY);
+		echo "解密数据：".$data;
+		//$string =  new \Java("com.example.Endecrypt");
+
+		//echo $string;
+
+
+		$str = urldecode("gH1SBpzKClC%2BrIgMlhAZz8D4CZ2iiuJGUF8%2BiEkzxSfY5wiF5PSG4NyzYYxKDMysbvO%2FxamRCWuSNQR2uZctbb5IFoou3%2BmO8ACBpEOXYjbH7G1rQDWHenczfr4awuD%2FywKH4JCIJDsg6rTW6JxjcYF3vfexJrupI6pe7fYS2JU%3D");
+		//print_r($str.'\n');
+		$str = base64_decode('asd');
+		$byte = $this->getBytes($str);
+
+		//print_r($byte);
+		//$str = $this->decrypt($str,"abcdefg1234567");
+
+		//print_r($str);
+
+
+
+		return $this->fetch('index/test');
+	}
+
+	function decrypt($encrypted,$key){
+		$key = $this->getEnkey($key);
+
+		$td = mcrypt_module_open(MCRYPT_DES, '', MCRYPT_MODE_CBC, '');
+		$iv = @mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+		$ks = mcrypt_enc_get_key_size($td);
+		@mcrypt_generic_init($td, $key, $iv);
+		$decrypted = (string)mdecrypt_generic($td, $encrypted);
+		mcrypt_generic_deinit($td);
+		mcrypt_module_close($td);
+
+		print_r(mb_convert_encoding($decrypted, "UTF-16LE"));
+	}
+
+	public static function getBytes($string) {
+		$bytes = array();
+		for($i = 0; $i < strlen($string); $i++){
+			$bytes[] = ord($string[$i]);
+			}
+		return $bytes;
+	}
+
+
+	public function test2(){
+		$year = date("Y",time()) ;
+		$week = date('W',time());
+		print_r($year."-".$week);echo '<br/>';
+
+		$beginLastweek=mktime(0,0,0,date('m'),date('d')-date('w')+1-7,date('Y'));
+		$endLastweek=mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y'));
+
+		$beginDate = date('Y-m-d',$beginLastweek);
+		$endDate = date('Y-m-d',$endLastweek);
+
+		print_r($beginDate."-".$endDate);echo '<br/>';
+
+		$beginLastweek = date($beginLastweek-7*24*60*60);
+		$endLastweek = date($endLastweek-7*24*60*60);
+
+		print_r($beginLastweek."-".$endLastweek);echo '<br/>';
+
+		$result = Db::query('select * from ims_mc_members m JOIN  `广西联通绑定号码属性20180802` s on s.tel = m.mobile');
+		print_r($result);
+
+
+	}
+
+	function getEnkey($spKey=""){
+		$deskey1 = md5($spKey);
+		$length = strlen ($deskey1);
+		if($length<24){
+			$key = str_pad($deskey1,24,'0');
+		}else{
+			$key = substr($deskey1, 0, 24);
+		}
+		return $key;
+	}
+
+	function UnicodeEncode($str){
+		preg_match_all('/./u',$str,$matches);
+		$unicodeStr = "";
+		foreach($matches[0] as $m){
+			$unicodeStr .= "&#".base_convert(bin2hex(iconv('UTF-8',"UCS-4",$m)),16,10);
+		}
+		return $unicodeStr;
+	}
+
 
 
 	/**
@@ -268,6 +384,22 @@ class Test extends Controller
 	}
 
 
+	public function  verifyMobile(){
+
+		return $this->fetch('index/location');
+	}
+
+
+	private function is_mobile( $text ) {
+		$search = '/^0?1[3|4|5|6|7|8][0-9]\d{8}$/';
+		if ( preg_match( $search, $text ) ) {
+			return  "yes" ;
+		} else {
+			return  "no" ;
+		}
+	}
+
+
 	/**
 	 * 将集团穿过来的数据转发给wocf
 	 */
@@ -277,7 +409,7 @@ class Test extends Controller
 		$json = isset($_POST["HTTP_RAW_POST_DATA"]) ? $_POST["HTTP_RAW_POST_DATA"] : file_get_contents("php://input");
 		$json = trim((String)$json);
 		$object = json_decode($json, true);
-		
+
 		$userNumber = (string)(empty($data["userNumber"]) ? $object["userNumber"] : $data["userNumber"]);
 
 		$rechargeTime = (string)(empty($data["rechargeTime"]) ? $object["rechargeTime"] : $data["rechargeTime"]);

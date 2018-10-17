@@ -5,10 +5,10 @@
  * Date: 2018/2/27
  * Time: 10:03
  */
-namespace app\miniapp\util;
+namespace app\miniprogram\util;
 
 
-use app\common\Logic;
+use app\miniprogram\common\Logic;
 
 class NetworkUtil extends Logic
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
-use app\common\Model as BaseModel;
+use app\miniprogram\common\Model as BaseModel;
 
 class MiniProgramsRoleMenu extends BaseModel
 {

@@ -6,7 +6,7 @@
  * Time: 15:56
  */
 
-namespace app\common;
+namespace app\miniprogram\common;
 
 use think\Request;
 

@@ -5,10 +5,10 @@
  * Date: 2018/2/2
  * Time: 15:00
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsChatMessage extends Model
 {

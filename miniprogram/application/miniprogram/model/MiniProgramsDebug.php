@@ -4,10 +4,10 @@
  * Date: 2017/12/19
  * Time: 9:48
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsDebug extends Model
 {

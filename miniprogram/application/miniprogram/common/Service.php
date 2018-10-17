@@ -6,7 +6,7 @@
  * Time: 12:03
  */
 
-namespace app\common;
+namespace app\miniprogram\common;
 
 
 class Service

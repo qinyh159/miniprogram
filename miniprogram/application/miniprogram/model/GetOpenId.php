@@ -5,10 +5,10 @@
  * Date: 2018/4/4
  * Time: 9:53
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class GetOpenId extends Model
 {

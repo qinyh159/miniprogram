@@ -6,7 +6,7 @@
  * Time: 16:01
  */
 
-namespace app\common;
+namespace app\miniprogram\common;
 
 
 class Model extends \think\Model

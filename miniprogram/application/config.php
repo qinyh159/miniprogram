@@ -236,4 +236,10 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    //redis配置
+    'REDIS' => array(
+        'REDIS_HOST'   => '127.0.0.1',
+        'REDIS_PORT'   => 6379,
+
+    ),
 ];

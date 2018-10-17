@@ -13,7 +13,10 @@ class Index extends Controller
 {
 	public function index()
 	{
-		return phpinfo();
+
+		$applistModel = new MiniProgramsApplist();
+		$applistInfo = $applistModel->getAppByUniqueId("ced762dca9aafa6420fe4924fa3daaaa");
+		print_r($applistInfo);
 
 
 		/*$timestamp = $this->msectime();

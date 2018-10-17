@@ -5,10 +5,10 @@
  * Date: 2017/11/22
  * Time: 17:42
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsFollower extends Model
 {
@@ -17,7 +17,7 @@ class MiniProgramsFollower extends Model
     public function getFollowerByOpenId($openId)
     {
         $openId = (string)$openId;
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = "SELECT * from mini_programs_follower where openid = :openid  limit 1";
         $data = $model->db()->query($sql, ['openid' => $openId]);
         if (empty($data)) {
@@ -29,7 +29,7 @@ class MiniProgramsFollower extends Model
     public function getFollowerById($id)
     {
         $id = (string)$id;
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = "SELECT * from mini_programs_follower where id = :id  limit 1";
         $data = $model->db()->query($sql, ['id' => $id]);
         if (empty($data)) {
@@ -41,7 +41,7 @@ class MiniProgramsFollower extends Model
     public function getFollowerByUserKey($userKey,$appid)
     {
         $userKey = (string)$userKey;
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = "SELECT * from mini_programs_follower where curUserKey = :curUserKey and appid=:appid limit 1";
         $data = $model->db()->query($sql, ['curUserKey' => $userKey,"appid"=>$appid]);
         if (empty($data)) {
@@ -53,7 +53,7 @@ class MiniProgramsFollower extends Model
     public function getCountOfFollowers()
     {
 
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = " SELECT count(id) followercount from mini_programs_follower ";
         $data = $model->db()->query($sql);
         if( empty($data) ) {
@@ -66,7 +66,7 @@ class MiniProgramsFollower extends Model
     public function getCurrentNewFollowers($appid,$time)
     {
 
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = " SELECT count(id) newfollower from mini_programs_follower WHERE followTime > :followTime and appid=:appid";
         $data = $model->db()->query($sql,["followTime"=>$time,"appid"=>$appid]);
         if( empty($data) ) {
@@ -79,7 +79,7 @@ class MiniProgramsFollower extends Model
     public function getDurationNewFollowers($appid,$fromTime,$endTime)
     {
 
-        $model = new \app\miniapp\model\MiniProgramsFollower();
+        $model = new \app\miniprogram\common\Model\MiniProgramsFollower();
         $sql = " SELECT count(id) newfollower from mini_programs_follower WHERE followTime > :fromTime and followTime < :endTime and appid=:appid";
         $data = $model->db()->query($sql,["fromTime"=>$fromTime,"endTime"=>$endTime,"appid"=>$appid]);
         if( empty($data) ) {

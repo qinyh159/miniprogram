@@ -5,15 +5,15 @@
 创建时间:2016-05-30
 最后更新时间:2016-05-30
 */
-namespace app\common;
+namespace app\miniprogram\common;
 class localesModel
 {
 	public static $language = 'en_US';
 
 	public function __construct() {
 		global $CFG;
-		if (empty($CFG['locales']['zh_CN'])) $CFG['locales']['zh_CN'] = include APP_PATH . 'locales/zh_CN.php';
-		if (empty($CFG['locales']['en_US'])) $CFG['locales']['en_US'] = include APP_PATH . 'locales/en_US.php';
+		if (empty($CFG['locales']['zh_CN'])) $CFG['locales']['zh_CN'] = include APP_PATH . 'miniprogram/locales/zh_CN.php';
+		if (empty($CFG['locales']['en_US'])) $CFG['locales']['en_US'] = include APP_PATH . 'miniprogram/locales/en_US.php';
 	}
 
 	public function init() {

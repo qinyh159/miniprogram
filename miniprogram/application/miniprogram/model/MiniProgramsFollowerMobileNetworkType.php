@@ -5,10 +5,10 @@
  * Date: 2018/2/12
  * Time: 17:15
  */
-namespace app\miniapp\model;
+namespace app\miniprogram\Model;
 
 
-use app\common\Model;
+use app\miniprogram\common\Model;
 
 class MiniProgramsFollowerMobileNetworkType extends Model
 {
