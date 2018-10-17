@@ -8,7 +8,7 @@
 
 namespace app\miniprogram\command;
 
-use app\miniapp\common\WXBizDataCrypt;
+use app\miniprogram\common\WXBizDataCrypt;
 use app\miniprogram\model\MiniProgramsApplist;
 use app\miniprogram\model\MiniProgramsFollower;
 use think\Config;
@@ -206,7 +206,7 @@ class Insertmessage extends Command
 							$phoneNumberDetail = empty($data["detail"]) ? "" : $data["detail"];
 							$encryptedData = empty($phoneNumberDetail["encryptedData"]) ? "" : $phoneNumberDetail["encryptedData"];
 							$iv = empty($phoneNumberDetail["iv"]) ? "" : $phoneNumberDetail["iv"];
-
+							$dataPhoneNumber = "";
 							$pc = new WXBizDataCrypt($applistInfo[0]["appid"], $info[0]["sessionKey"]);
 							$errCode = $pc->decryptData($encryptedData, $iv, $dataPhoneNumber);
 							if ($errCode == 0) {
@@ -261,7 +261,7 @@ class Insertmessage extends Command
 					$followerLocation = $this->getFollowerLocationInfoArr($userData, $defaultAvatarUrl, $appId, $followerid, $openId, $uniqueId, $openId);
 
 
-					$miniFollowerLocationModel = new \app\miniapp\model\MiniProgramsFollowerLocation();
+					$miniFollowerLocationModel = new \app\miniprogram\model\MiniProgramsFollowerLocation();
 					$latitude = empty($followerLocation["latitude"]) ? 0 : $followerLocation["latitude"];
 					$longitude = empty($followerLocation["longitude"]) ? 0 : $followerLocation["longitude"];
 					$openid = empty($followerLocation["openid"]) ? "" : $followerLocation["openid"];
@@ -298,8 +298,8 @@ class Insertmessage extends Command
 						}
 					}
 
-					$miniFollowerMobileInfoModel = new \app\miniapp\model\MiniProgramsFollowerMobileInfo();
-					$miniFollowerMobileNetWorkTypeModel = new \app\miniapp\model\MiniProgramsFollowerMobileNetworkType();
+					$miniFollowerMobileInfoModel = new \app\miniprogram\model\MiniProgramsFollowerMobileInfo();
+					$miniFollowerMobileNetWorkTypeModel = new \app\miniprogram\model\MiniProgramsFollowerMobileNetworkType();
 
 					$model = empty($phoneData["model"]) ? "" : $phoneData["model"];
 					$networkType = empty($phoneData["networkType"]) ? "" : $phoneData["networkType"];
@@ -443,7 +443,7 @@ class Insertmessage extends Command
 					$originalid = $array_userName->item(0)->nodeValue;
 
 					$applist = "SELECT * FROM `mini_programs_applist` WHERE originalid= :originalid";
-					$applistModel = new \app\miniapp\model\MiniProgramsApplist();
+					$applistModel = new \app\miniprogram\model\MiniProgramsApplist();
 					$applistInfo = $applistModel->db()->query($applist, ['originalid' => $originalid]);
 
 					//当前数据库无该app
@@ -456,10 +456,10 @@ class Insertmessage extends Command
 
 					$format = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><Encrypt><![CDATA[%s]]></Encrypt></xml>";
 					$from_xml = sprintf($format, $encrypt);
-					$pc = new \app\miniapp\common\WXBizMsgCrypt($applistInfo[0]["token"], $applistInfo[0]["encodingaeskey"], $applistInfo[0]["appid"]);
+					$pc = new \app\miniprogram\common\WXBizMsgCrypt($applistInfo[0]["token"], $applistInfo[0]["encodingaeskey"], $applistInfo[0]["appid"]);
 					$msg = '';
-					$sha1 = new \app\miniapp\common\sha1();
-					$xmlparse = new \app\miniapp\common\xmlparse;
+					$sha1 = new \app\miniprogram\common\sha1();
+					$xmlparse = new \app\miniprogram\common\xmlparse;
 					$array = $xmlparse->extract($from_xml);
 
 
@@ -480,7 +480,7 @@ class Insertmessage extends Command
 
 
 							$applist = "SELECT * FROM `mini_programs_follower` WHERE openid= :openid";
-							$followerModel = new \app\miniapp\model\MiniProgramsFollower();
+							$followerModel = new \app\miniprogram\model\MiniProgramsFollower();
 							$followerInfo = $followerModel->db()->query($applist, ['openid' => $fromUserName]);
 
 							//当前数据库中不存在这个人,则插入信息用户数据(有程序合并当前用户信息)
