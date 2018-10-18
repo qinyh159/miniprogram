@@ -19,3 +19,7 @@ Route::rule('verifyMobile','mini/test/verifyMobile');
 Route::rule('test1','mini/test/test1');
 Route::rule('test2','mini/test/test2');
 Route::rule('getMiniProgramsEvent','miniprogram/Index/getMiniProgramsEvent');
+Route::rule('getMiniProgramsId','miniprogram/Index/getMiniProgramsId');
+Route::rule('getOpenId','miniprogram/Index/getOpenId');
+Route::rule('getCurUserKey','miniprogram/Index/getCurUserKey');
+Route::rule('checkOpenId','miniprogram/Index/checkOpenId');
